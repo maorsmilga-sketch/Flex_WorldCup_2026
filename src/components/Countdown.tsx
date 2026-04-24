@@ -13,23 +13,28 @@ function pad(n: number) {
 }
 
 export function Countdown({ target, label }: Props) {
-  const [now, setNow] = useState(() => Date.now());
+  const [mounted, setMounted] = useState(false);
+  const [now, setNow] = useState(0);
 
   useEffect(() => {
+    setMounted(true);
+    setNow(Date.now());
     const t = setInterval(() => setNow(Date.now()), 1000);
     return () => clearInterval(t);
   }, []);
 
-  const diff = Math.max(0, target.getTime() - now);
+  const diff = mounted ? Math.max(0, target.getTime() - now) : 0;
   const days = Math.floor(diff / 86400000);
   const hours = Math.floor((diff % 86400000) / 3600000);
   const minutes = Math.floor((diff % 3600000) / 60000);
   const seconds = Math.floor((diff % 60000) / 1000);
-  const done = diff === 0;
+  const done = mounted && diff === 0;
 
   const cell = (value: number, unit: string) => (
     <div className="flex flex-col items-center rounded-xl bg-white/10 px-3 py-2 backdrop-blur-sm min-w-[3.5rem]">
-      <span className="text-2xl font-bold tabular-nums text-white">{pad(value)}</span>
+      <span className="text-2xl font-bold tabular-nums text-white">
+        {mounted ? pad(value) : "—"}
+      </span>
       <span className="text-xs text-sky-100/90">{unit}</span>
     </div>
   );

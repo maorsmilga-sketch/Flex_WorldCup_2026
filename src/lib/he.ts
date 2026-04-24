@@ -83,7 +83,7 @@ export const he = {
   stickyMe: "המיקום שלכם",
 
   configureEnv:
-    "יש להגדיר NEXT_PUBLIC_SUPABASE_URL ו-NEXT_PUBLIC_SUPABASE_ANON_KEY בקובץ .env.local",
+    "יש ליצור קובץ .env.local בתיקיית web (ליד package.json) ולהגדיר בו NEXT_PUBLIC_SUPABASE_URL ו-NEXT_PUBLIC_SUPABASE_ANON_KEY. לאחר שמירה — עצרו והפעילו מחדש את npm run dev.",
 
   tiebreakHint:
     "במקרה של שוויון בניקוד — קודם מי שנרשם מוקדם יותר לפי חותמת זמן.",
