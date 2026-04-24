@@ -1,65 +1,59 @@
 import Image from "next/image";
+import Link from "next/link";
+import { Countdown } from "@/components/Countdown";
+import { FootballHero } from "@/components/FootballHero";
+import { PHASE1_LOCK_ISO, PHASE2_LOCK_ISO } from "@/lib/constants";
+import { getPhase1LockDate, getPhase2LockDate } from "@/lib/locks";
+import { he } from "@/lib/he";
 
-export default function Home() {
+export default function HomePage() {
+  const d1 = getPhase1LockDate();
+  const d2 = getPhase2LockDate();
+
   return (
-    <div className="flex flex-col flex-1 items-center justify-center bg-zinc-50 font-sans dark:bg-black">
-      <main className="flex flex-1 w-full max-w-3xl flex-col items-center justify-between py-32 px-16 bg-white dark:bg-black sm:items-start">
-        <Image
-          className="dark:invert"
-          src="/next.svg"
-          alt="Next.js logo"
-          width={100}
-          height={20}
-          priority
-        />
-        <div className="flex flex-col items-center gap-6 text-center sm:items-start sm:text-left">
-          <h1 className="max-w-xs text-3xl font-semibold leading-10 tracking-tight text-black dark:text-zinc-50">
-            To get started, edit the page.tsx file.
-          </h1>
-          <p className="max-w-md text-lg leading-8 text-zinc-600 dark:text-zinc-400">
-            Looking for a starting point or more instructions? Head over to{" "}
-            <a
-              href="https://vercel.com/templates?framework=next.js&utm_source=create-next-app&utm_medium=appdir-template-tw&utm_campaign=create-next-app"
-              className="font-medium text-zinc-950 dark:text-zinc-50"
+    <div className="relative overflow-hidden">
+      <FootballHero />
+      <div className="relative mx-auto flex max-w-6xl flex-col gap-12 px-4 py-16 md:flex-row md:items-center md:justify-between">
+        <div className="max-w-xl space-y-6">
+          <div className="flex flex-col items-start gap-4 sm:flex-row sm:items-center">
+            <div className="relative h-14 w-40 shrink-0">
+              <Image
+                src="/flex-logo.png"
+                alt="Flex"
+                fill
+                className="object-contain object-right"
+                priority
+              />
+            </div>
+            <h1 className="text-3xl font-extrabold leading-tight text-white md:text-4xl">
+              {he.appTitle}
+            </h1>
+          </div>
+          <p className="text-lg text-sky-100/95">{he.tagline}</p>
+          <p className="text-sky-200/90">{he.landingSub}</p>
+          <div className="flex flex-wrap gap-3">
+            <Link
+              href="/login"
+              className="inline-flex items-center justify-center rounded-xl bg-sky-500 px-8 py-3 text-base font-bold text-[#061526] shadow-lg shadow-sky-900/30 transition hover:scale-[1.02] hover:bg-sky-400"
             >
-              Templates
-            </a>{" "}
-            or the{" "}
-            <a
-              href="https://nextjs.org/learn?utm_source=create-next-app&utm_medium=appdir-template-tw&utm_campaign=create-next-app"
-              className="font-medium text-zinc-950 dark:text-zinc-50"
+              {he.landingCta}
+            </Link>
+            <Link
+              href="/leaderboard"
+              className="inline-flex items-center justify-center rounded-xl border border-sky-400/50 px-6 py-3 font-semibold text-sky-100 transition hover:bg-sky-500/10"
             >
-              Learning
-            </a>{" "}
-            center.
+              {he.navLeaderboard}
+            </Link>
+          </div>
+          <p className="text-xs text-sky-300/70" dir="ltr">
+            {PHASE1_LOCK_ISO} · {PHASE2_LOCK_ISO}
           </p>
         </div>
-        <div className="flex flex-col gap-4 text-base font-medium sm:flex-row">
-          <a
-            className="flex h-12 w-full items-center justify-center gap-2 rounded-full bg-foreground px-5 text-background transition-colors hover:bg-[#383838] dark:hover:bg-[#ccc] md:w-[158px]"
-            href="https://vercel.com/new?utm_source=create-next-app&utm_medium=appdir-template-tw&utm_campaign=create-next-app"
-            target="_blank"
-            rel="noopener noreferrer"
-          >
-            <Image
-              className="dark:invert"
-              src="/vercel.svg"
-              alt="Vercel logomark"
-              width={16}
-              height={16}
-            />
-            Deploy Now
-          </a>
-          <a
-            className="flex h-12 w-full items-center justify-center rounded-full border border-solid border-black/[.08] px-5 transition-colors hover:border-transparent hover:bg-black/[.04] dark:border-white/[.145] dark:hover:bg-[#1a1a1a] md:w-[158px]"
-            href="https://nextjs.org/docs?utm_source=create-next-app&utm_medium=appdir-template-tw&utm_campaign=create-next-app"
-            target="_blank"
-            rel="noopener noreferrer"
-          >
-            Documentation
-          </a>
+        <div className="grid w-full max-w-md shrink-0 gap-4 md:max-w-sm">
+          <Countdown target={d1} label={he.phase1LockLabel} />
+          <Countdown target={d2} label={he.phase2LockLabel} />
         </div>
-      </main>
+      </div>
     </div>
   );
 }
